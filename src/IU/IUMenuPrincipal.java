@@ -100,7 +100,7 @@ public class IUMenuPrincipal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(associados, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emprestimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(livros, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,15 +138,18 @@ public class IUMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void devolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_devolverActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new IUDevolver().setVisible(true);
     }//GEN-LAST:event_devolverActionPerformed
 
     private void emprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emprestimoActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new IUEmprestar().setVisible(true);
     }//GEN-LAST:event_emprestimoActionPerformed
 
     private void livrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_livrosActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new IULivros().setVisible(true);
     }//GEN-LAST:event_livrosActionPerformed
 
     private void associadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_associadosActionPerformed
@@ -159,7 +162,8 @@ public class IUMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void pagar_multaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagar_multaActionPerformed
-        // TODO add your handling code here:
+        dispose();
+        new IUPagarMulta().setVisible(true);
     }//GEN-LAST:event_pagar_multaActionPerformed
 
     /**
