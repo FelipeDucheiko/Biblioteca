@@ -15,8 +15,6 @@ public class Associado {
 
 	private String email;
 
-	private Multa multa;
-
 	private Endereco endereco;
 
 	public Boolean cadastrar(int nCasa, String codigo, String nome, String CPF, String RG, String telefone, String email, Endereco endereco) {
