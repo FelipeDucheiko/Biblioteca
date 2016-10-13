@@ -16,14 +16,29 @@ import javax.swing.JOptionPane;
  *
  * @author felip
  */
-public class IUCadastrarAssociado extends javax.swing.JFrame {
-
+public class IUAlterarAssociado extends javax.swing.JFrame {
+    private AssociadoVO associadoVO;
     /**
      * Creates new form IUCadastrarUsuario
      */
-    public IUCadastrarAssociado() {
+    public IUAlterarAssociado(AssociadoVO associadoVO) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.associadoVO = associadoVO;
+        
+        numero.setText(associadoVO.endereco.getnCasa());
+        rua.setText(associadoVO.endereco.getRua());
+        bairro.setText(associadoVO.endereco.getBairro());
+        cidade.setText(associadoVO.endereco.getCidade());
+        estado.setText(associadoVO.endereco.getEstado());
+        
+        nome.setText(associadoVO.getNome());
+        cpf.setText(associadoVO.getCPF());
+        rg.setText(associadoVO.getRG());
+        telefone.setText(associadoVO.getTelefone());
+        e_mail.setText(associadoVO.getEmail());
+        
+        
     }
 
     /**
@@ -66,7 +81,7 @@ public class IUCadastrarAssociado extends javax.swing.JFrame {
         Jlabel16.setText("Nome:");
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jLabel1.setText("Novo Associado");
+        jLabel1.setText("Alterar Associado");
         jLabel1.setVerifyInputWhenFocusTarget(false);
 
         nome.addActionListener(new java.awt.event.ActionListener() {
@@ -316,15 +331,12 @@ public class IUCadastrarAssociado extends javax.swing.JFrame {
     }//GEN-LAST:event_bairroActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-        EnderecoVO ederecoVO = new EnderecoVO();
-        ederecoVO.setnCasa(numero.getText());
-        ederecoVO.setRua(rua.getText());
-        ederecoVO.setBairro(bairro.getText());
-        ederecoVO.setCidade(cidade.getText());
-        ederecoVO.setEstado(estado.getText());
+        associadoVO.endereco.setnCasa(numero.getText());
+        associadoVO.endereco.setRua(rua.getText());
+        associadoVO.endereco.setBairro(bairro.getText());
+        associadoVO.endereco.setCidade(cidade.getText());
+        associadoVO.endereco.setEstado(estado.getText());
         
-        AssociadoVO associadoVO = new AssociadoVO();
-        associadoVO.setEndereco(ederecoVO);
         associadoVO.setNome(nome.getText());
         associadoVO.setCPF(cpf.getText());
         associadoVO.setRG(rg.getText());
@@ -332,13 +344,13 @@ public class IUCadastrarAssociado extends javax.swing.JFrame {
         associadoVO.setEmail(e_mail.getText());
         
         EnderecoPERS enderecoPERS = new EnderecoPERS();
-        int codigoEndereco = enderecoPERS.cadastrarEndereco(ederecoVO);
+        enderecoPERS.atualizar(associadoVO);
         
         AssociadoPERS associadoPERS = new AssociadoPERS();
-        String msg = associadoPERS.cadastrarAssociado(associadoVO, codigoEndereco);
+        String msg = associadoPERS.atualizarAssociado(associadoVO);
         
         JOptionPane.showMessageDialog(null, msg);
-        if (msg.equals("Associado cadastrado com sucesso.")){
+        if (msg.equals("Associado atualizado com sucesso.")){
             this.dispose();
             new IUAssociados().setVisible(true);
         }
@@ -354,41 +366,7 @@ public class IUCadastrarAssociado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_e_mailActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarAssociado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarAssociado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarAssociado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarAssociado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new IUCadastrarAssociado().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jlabel;

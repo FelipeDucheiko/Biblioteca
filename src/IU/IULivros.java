@@ -5,18 +5,39 @@
  */
 package IU;
 
+import PERS.LivroPERS;
+import VO.LivroVO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author felip
  */
 public class IULivros extends javax.swing.JFrame {
-
+    DefaultTableModel model;
     /**
      * Creates new form IULivros
      */
     public IULivros() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        LivroPERS livroPERS = new LivroPERS();
+        List livros = livroPERS.retornarLivros();
+        
+        model = (DefaultTableModel) tabelaLivros.getModel(); 
+        LivroVO livroVO;
+        int i;
+        int tam = livros.size();
+        for(i=0; i<tam; i++){
+            livroVO = (LivroVO) livros.get(i);       
+            model.addRow(new String [] {livroVO.getCodigo(),livroVO.getTitulo(),livroVO.getISBN(),livroVO.getEditora(), livroVO.getLocalEdicao()});
+        }   
+        
+        
     }
 
     /**
@@ -33,8 +54,9 @@ public class IULivros extends javax.swing.JFrame {
         excluir = new javax.swing.JButton();
         alterar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaLivros = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        autores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,18 +75,25 @@ public class IULivros extends javax.swing.JFrame {
         });
 
         excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirActionPerformed(evt);
+            }
+        });
 
         alterar.setText("Alterar");
+        alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaLivros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Título", "ISBN", "Editora", "Local de Edição", "Autor"
+                "Código", "Título", "ISBN", "Editora", "Local de Edição"
             }
         ) {
             Class[] types = new Class [] {
@@ -75,11 +104,18 @@ public class IULivros extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabelaLivros);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setText("Livros");
         jLabel1.setVerifyInputWhenFocusTarget(false);
+
+        autores.setText("Autores");
+        autores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,7 +124,9 @@ public class IULivros extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(26, 26, 26)
+                .addComponent(autores, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,7 +152,8 @@ public class IULivros extends javax.swing.JFrame {
                     .addComponent(alterar)
                     .addComponent(excluir)
                     .addComponent(cadastrar)
-                    .addComponent(voltar))
+                    .addComponent(voltar)
+                    .addComponent(autores))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -131,48 +170,68 @@ public class IULivros extends javax.swing.JFrame {
         new IUCadastrarLivro().setVisible(true);
     }//GEN-LAST:event_cadastrarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IULivros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IULivros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IULivros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IULivros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void autoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoresActionPerformed
+        int linhaSelecionada = tabelaLivros.getSelectedRow();
+        
+        if (linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+            return;
         }
-        //</editor-fold>
+        String codigoLivro = (String) model.getValueAt(linhaSelecionada, 0);
+        String tituloLivro = (String) model.getValueAt(linhaSelecionada, 1);
+        
+        this.dispose();
+        new IUExibirAutores(codigoLivro, tituloLivro).setVisible(true);
+    }//GEN-LAST:event_autoresActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new IULivros().setVisible(true);
-            }
-        });
-    }
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
+        int linhaSelecionada = tabelaLivros.getSelectedRow();
+        
+        if (linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+            return;
+        }
+        String codigoLivro = (String) model.getValueAt(linhaSelecionada, 0);
+        
+        LivroPERS livroPERS = new LivroPERS();
+        String msg = livroPERS.excluirLivro(codigoLivro);
+        
+        JOptionPane.showMessageDialog(null, msg);
+        this.dispose();
+        new IULivros().setVisible(true);
+    }//GEN-LAST:event_excluirActionPerformed
+
+    private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
+       int linhaSelecionada = tabelaLivros.getSelectedRow();
+        
+        if (linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+            return;
+        }
+        
+        LivroVO livroVO = new LivroVO();
+        livroVO.setCodigo((String) model.getValueAt(linhaSelecionada, 0));
+        livroVO.setTitulo((String) model.getValueAt(linhaSelecionada, 1));
+        livroVO.setISBN((String) model.getValueAt(linhaSelecionada, 2));
+        livroVO.setEditora((String) model.getValueAt(linhaSelecionada, 3));
+        livroVO.setLocalEdicao((String) model.getValueAt(linhaSelecionada, 4));
+        
+        LivroPERS livroPERS = new LivroPERS();
+        livroVO.setAutor((ArrayList<String>) livroPERS.retornarAutores(livroVO.getCodigo()));
+        
+        this.dispose();
+        new IUAlterarLivro(livroVO).setVisible(true);
+        
+    }//GEN-LAST:event_alterarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton alterar;
+    private javax.swing.JButton autores;
     private javax.swing.JButton cadastrar;
     private javax.swing.JButton excluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaLivros;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

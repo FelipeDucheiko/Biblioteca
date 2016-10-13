@@ -5,18 +5,37 @@
  */
 package IU;
 
+import PERS.AssociadoPERS;
+import PERS.EnderecoPERS;
+import VO.AssociadoVO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author felip
  */
 public class IUAssociados extends javax.swing.JFrame {
-
+    DefaultTableModel model;
     /**
      * Creates new form Associados
      */
     public IUAssociados() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        AssociadoPERS associadoPERS = new AssociadoPERS();     
+        List associados = associadoPERS.retornarAssociados();
+        
+        model = (DefaultTableModel) tableAssociados.getModel(); 
+        AssociadoVO associadoVO;
+        int i;
+        int tam = associados.size();
+        for(i=0; i<tam; i++){
+            associadoVO = (AssociadoVO) associados.get(i);       
+            model.addRow(new String [] {associadoVO.getCodigo(),associadoVO.getNome(),associadoVO.getCPF(),associadoVO.getRG(), associadoVO.getTelefone(), associadoVO.getEmail()});
+        }
     }
 
     /**
@@ -28,13 +47,17 @@ public class IUAssociados extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableAssociados = new javax.swing.JTable();
         alterar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        exluir = new javax.swing.JButton();
         cadastrar = new javax.swing.JButton();
         voltar = new javax.swing.JButton();
+        endereco = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,30 +65,52 @@ public class IUAssociados extends javax.swing.JFrame {
         jLabel1.setText("Associados");
         jLabel1.setVerifyInputWhenFocusTarget(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableAssociados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Código", "Nome", "CPF", "RG", "Telefone", "E-mail", "Estado", "Cidade", "Bairro", "Rua", "Número"
+                "Código", "Nome", "CPF", "RG", "Telefone", "E-mail"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableAssociados);
+        if (tableAssociados.getColumnModel().getColumnCount() > 0) {
+            tableAssociados.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tableAssociados.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tableAssociados.getColumnModel().getColumn(2).setPreferredWidth(10);
+            tableAssociados.getColumnModel().getColumn(3).setPreferredWidth(10);
+            tableAssociados.getColumnModel().getColumn(4).setPreferredWidth(10);
+            tableAssociados.getColumnModel().getColumn(5).setPreferredWidth(150);
+        }
 
         alterar.setText("Alterar");
+        alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Excluir");
+        exluir.setText("Excluir");
+        exluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exluirActionPerformed(evt);
+            }
+        });
 
         cadastrar.setText("Cadastrar");
         cadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -81,26 +126,38 @@ public class IUAssociados extends javax.swing.JFrame {
             }
         });
 
+        endereco.setText("Endereço");
+        endereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enderecoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 20, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(exluir, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,13 +166,14 @@ public class IUAssociados extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(alterar)
-                    .addComponent(jButton2)
+                    .addComponent(exluir)
                     .addComponent(cadastrar)
-                    .addComponent(voltar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(voltar)
+                    .addComponent(endereco))
+                .addContainerGap())
         );
 
         pack();
@@ -130,6 +188,63 @@ public class IUAssociados extends javax.swing.JFrame {
         this.dispose();
         new IUMenuPrincipal().setVisible(true);
     }//GEN-LAST:event_voltarActionPerformed
+
+    private void enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enderecoActionPerformed
+        
+        int linhaSelecionada = tableAssociados.getSelectedRow();
+        
+        if (linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+            return;
+        }
+        String codigoAssociado = (String) model.getValueAt(linhaSelecionada, 0);
+        
+        this.dispose();
+        new IUExibirEndereco(codigoAssociado).setVisible(true);
+  
+    }//GEN-LAST:event_enderecoActionPerformed
+
+    private void exluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exluirActionPerformed
+        int linhaSelecionada = tableAssociados.getSelectedRow();
+        
+        if (linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+            return;
+        }
+        String codigoAssociado = (String) model.getValueAt(linhaSelecionada, 0);
+        
+        AssociadoPERS associadoPERS = new AssociadoPERS();
+        String msg = associadoPERS.excluirAssociado(codigoAssociado);
+        
+        JOptionPane.showMessageDialog(null, msg);
+        this.dispose();
+        new IUAssociados().setVisible(true);
+        
+    }//GEN-LAST:event_exluirActionPerformed
+
+    private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
+        int linhaSelecionada = tableAssociados.getSelectedRow();
+        
+        if (linhaSelecionada == -1){
+            JOptionPane.showMessageDialog(null, "Nenhum item selecionado");
+            return;
+        }
+        
+        AssociadoVO associadoVO = new AssociadoVO();
+        associadoVO.setCodigo((String) model.getValueAt(linhaSelecionada, 0));
+        associadoVO.setNome((String) model.getValueAt(linhaSelecionada, 1));
+        associadoVO.setCPF((String) model.getValueAt(linhaSelecionada, 2));
+        associadoVO.setRG((String) model.getValueAt(linhaSelecionada, 3));
+        associadoVO.setTelefone((String) model.getValueAt(linhaSelecionada, 4));
+        associadoVO.setEmail((String) model.getValueAt(linhaSelecionada, 5));
+        
+        EnderecoPERS enderecoPERS = new EnderecoPERS();
+        associadoVO.setEndereco(enderecoPERS.retornarEndereco(associadoVO.getCodigo()));
+        
+        this.dispose();
+        new IUAlterarAssociado(associadoVO).setVisible(true);
+        
+    }//GEN-LAST:event_alterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,10 +285,12 @@ public class IUAssociados extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton alterar;
     private javax.swing.JButton cadastrar;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton endereco;
+    private javax.swing.JButton exluir;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tableAssociados;
     private javax.swing.JButton voltar;
     // End of variables declaration//GEN-END:variables
 }

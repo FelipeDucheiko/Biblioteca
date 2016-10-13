@@ -16,17 +16,29 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author felip
  */
-public class IUCadastrarLivro extends javax.swing.JFrame {
+public class IUAlterarLivro extends javax.swing.JFrame {
     DefaultTableModel model;
     List<String> autores;
+    LivroVO livroVO;
     /**
      *  Creates new form IUCadastrarLivro
      */
-    public IUCadastrarLivro() {
+    public IUAlterarLivro(LivroVO livroVO) {
         initComponents();
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) tabelaAutores.getModel();
-        autores = new ArrayList<String>();
+        this.livroVO = livroVO;
+        
+        titulo.setText(livroVO.getTitulo());
+        ISBN.setText(livroVO.getISBN());
+        editora.setText(livroVO.getEditora());
+        localEdicao.setText(livroVO.getLocalEdicao());
+        
+        autores = livroVO.getAutor();
+        for(Object autor: autores){
+            model.addRow(new String [] {(String)autor});
+        }
+        
     }
 
     /**
@@ -74,7 +86,7 @@ public class IUCadastrarLivro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
-        jLabel1.setText("Novo Livro");
+        jLabel1.setText("Alterar Livro");
         jLabel1.setVerifyInputWhenFocusTarget(false);
 
         Jlabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -267,8 +279,6 @@ public class IUCadastrarLivro extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-        LivroVO livroVO = new LivroVO();
-        
         livroVO.setTitulo(titulo.getText());
         livroVO.setISBN(ISBN.getText());
         livroVO.setEditora(editora.getText());
@@ -276,10 +286,10 @@ public class IUCadastrarLivro extends javax.swing.JFrame {
         livroVO.setAutor((ArrayList<String>) autores);
         
         LivroPERS livroPERS = new LivroPERS();
-        String msg = livroPERS.cadastrarLivro(livroVO);
+        String msg = livroPERS.alterarLivro(livroVO);
         
         JOptionPane.showMessageDialog(null, msg);
-        if (msg.equals("Livro cadastrado com sucesso.")){
+        if (msg.equals("Livro atualizado com sucesso.")){
             this.dispose();
             new IULivros().setVisible(true);
         }
@@ -305,47 +315,13 @@ public class IUCadastrarLivro extends javax.swing.JFrame {
         
         autores.remove(linhaSelecionada);
         model.removeRow(linhaSelecionada);
-        
     }//GEN-LAST:event_removerActionPerformed
 
     private void ISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ISBNActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ISBNActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IUCadastrarLivro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new IUCadastrarLivro().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ISBN;
